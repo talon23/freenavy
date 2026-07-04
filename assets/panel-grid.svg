@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs><pattern id="p" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M42 0H0V42" fill="none" stroke="#61e7ff" stroke-opacity=".12" stroke-width="1"/><circle cx="0" cy="0" r="1.5" fill="#61e7ff" fill-opacity=".35"/></pattern></defs>
+  <rect width="800" height="500" fill="url(#p)"/>
+  <path d="M80 390c120-90 235-130 350-120s204-39 290-155" fill="none" stroke="#ffb952" stroke-opacity=".13" stroke-width="2" stroke-dasharray="8 12"/>
+</svg>

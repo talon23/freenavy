@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title desc">
+  <title id="title">Free Navy mark</title>
+  <desc id="desc">A stylised star, compass and naval anchor.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#61e7ff"/>
+      <stop offset="1" stop-color="#ffb952"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="#07131f" stroke="url(#g)" stroke-width="5"/>
+  <path d="M100 20l10 45 33-22-22 33 45 10-45 10 22 33-33-22-10 45-10-45-33 22 22-33-45-10 45-10-22-33 33 22z" fill="none" stroke="#61e7ff" stroke-width="4" opacity=".65"/>
+  <circle cx="100" cy="82" r="17" fill="none" stroke="#e7fbff" stroke-width="7"/>
+  <path d="M100 99v50M75 126h50M68 123c3 28 18 45 32 45s29-17 32-45" fill="none" stroke="#e7fbff" stroke-width="8" stroke-linecap="round"/>
+  <path d="M57 123l11-12 11 12M121 123l11-12 11 12" fill="none" stroke="#ffb952" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="100" cy="100" r="4" fill="#ffb952"/>
+</svg>

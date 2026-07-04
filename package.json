@@ -1,0 +1,19 @@
+{
+  "name": "free-navy-org-command",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild js/app.js --bundle --format=esm --minify --sourcemap --outfile=js/app.bundle.js",
+    "check": "node --check js/app.js && node --check js/data.js && node --check js/pages.js && node --check js/sample-data.js && node --check js/utils.js && node --check netlify/lib/netlify.mjs && node --check netlify/lib/private-signup.mjs && node --check netlify/lib/game-import.mjs && node --check netlify/lib/backup.mjs && node --check netlify/lib/official-live.mjs && node --check netlify/functions/portal-api.mjs && node --check netlify/functions/membership-request.mjs && node --check netlify/functions/signup-link.mjs && node --check netlify/functions/invite-member.mjs && node --check netlify/functions/backup-manager.mjs && node --check netlify/functions/scheduled-backup.mjs && node --check netlify/functions/sync-live-metadata.mjs && node --check netlify/functions/sync-game-data-background.mjs && node --check netlify/functions/sync-game-data-scheduled.mjs && node --check netlify/functions/live-version.mjs && node --check netlify/functions/uex.mjs && node --check netlify/functions/warehouse-image.mjs",
+    "test": "node tests/permissions.mjs"
+  },
+  "dependencies": {
+    "@netlify/blobs": "10.1.0",
+    "@netlify/database": "^1.1.0",
+    "@netlify/functions": "^5.3.0",
+    "@netlify/identity": "^1.2.0",
+    "pg": "^8.22.0",
+    "esbuild": "^0.28.1"
+  }
+}

@@ -1,0 +1,35 @@
+FREE NAVY FULL REDEPLOY PACKAGE
+===============================
+
+Source archive: freenavy-main.zip supplied by the repository owner
+Package version: 4.0.0
+
+FIX APPLIED
+-----------
+Netlify Database migration numbers are now unique and ordered:
+
+0001_free_navy_core.sql
+0002_admin_console.sql
+0003_command_ranks_imports.sql
+0004_governance_operations.sql
+0005_import_corrections.sql
+
+The SQL contents were not edited. The three newer migration files were renamed only.
+
+VALIDATION RESULTS
+------------------
+PASS - No duplicate migration numbers
+PASS - README.md and REDEPLOY.md use the corrected migration names
+PASS - npm ci
+PASS - npm run check
+PASS - npm test
+PASS - npm run build
+PASS - Production browser bundle generated
+PASS - npm audit reported 0 vulnerabilities
+PASS - No real .env file included
+PASS - node_modules, .netlify and .git excluded
+
+NETLIFY REDEPLOY
+----------------
+Replace the repository contents with this package, commit and push, then use:
+Deploys > Trigger deploy > Clear cache and deploy site

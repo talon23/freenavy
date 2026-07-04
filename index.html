@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07131f" />
+  <meta name="description" content="Free Navy secure Star Citizen organisation command portal." />
+  <title>Free Navy Command</title>
+  <link rel="icon" href="/assets/free-navy-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+  <section id="public-shell" class="public-shell" data-page="public">
+    <nav class="public-nav">
+      <a class="brand" href="#">
+        <img src="/assets/free-navy-mark.svg" alt="" />
+        <span><strong>FREE NAVY</strong><small>ORG COMMAND NETWORK</small></span>
+      </a>
+      <button id="open-login" class="button primary">Member login</button>
+    </nav>
+
+    <main class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">INDEPENDENT. ORGANISED. READY.</p>
+        <h1>One secure bridge for the whole organisation.</h1>
+        <p class="hero-lead">Coordinate cargo, crafting, operations, fleet availability, member points, auctions and the Free Navy warehouse without exposing internal data to former members or rival organisations.</p>
+        <div class="hero-actions">
+          <button id="hero-login" class="button primary large">Enter command portal</button>
+          <button id="preview-demo" class="button ghost large hidden">Preview sample portal</button>
+        </div>
+        <p id="setup-message" class="setup-message hidden"></p>
+      </div>
+      <div class="hero-radar" aria-hidden="true">
+        <div class="radar-ring ring-one"></div>
+        <div class="radar-ring ring-two"></div>
+        <div class="radar-ring ring-three"></div>
+        <div class="radar-sweep"></div>
+        <img src="/assets/free-navy-mark.svg" alt="" />
+      </div>
+    </main>
+
+    <div class="public-feature-strip">
+      <article><span>01</span><strong>Secure access</strong><small>Invite-only membership and instant deactivation.</small></article>
+      <article><span>02</span><strong>Shared logistics</strong><small>Warehouse stock, crafting requirements and shortages.</small></article>
+      <article><span>03</span><strong>Org economy</strong><small>Points, auctions, donations and member trading.</small></article>
+      <article><span>04</span><strong>Expandable modules</strong><small>Built to add base building, engineering and reputation later.</small></article>
+    </div>
+    <footer class="fan-notice public-fan-notice">
+      <strong>Unofficial Star Citizen fan site.</strong> Not affiliated with the Cloud Imperium group of companies. All content not authored by Free Navy members is property of its respective owners.
+      <a href="https://robertsspaceindustries.com/" target="_blank" rel="noreferrer">Official Star Citizen website</a>
+    </footer>
+  </section>
+
+  <section id="login-panel" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <div class="login-card">
+      <button id="close-login" class="icon-button close-button" aria-label="Close">×</button>
+      <img class="login-mark" src="/assets/free-navy-mark.svg" alt="Free Navy" />
+      <p class="eyebrow">AUTHORISED PERSONNEL ONLY</p>
+      <h2 id="login-title">Command network login</h2>
+      <form id="login-form" class="stack-form">
+        <label>Email<input id="login-email" type="email" autocomplete="email" required /></label>
+        <label>Password<input id="login-password" type="password" autocomplete="current-password" required /></label>
+        <button class="button primary full" type="submit">Log in</button>
+      </form>
+      <form id="invite-accept-form" class="stack-form hidden">
+        <p class="fine-print">Your invitation is valid. Choose the password for your Free Navy account.</p>
+        <label>New password<input id="invite-password" type="password" autocomplete="new-password" minlength="10" required /></label>
+        <label>Confirm password<input id="invite-password-confirm" type="password" autocomplete="new-password" minlength="10" required /></label>
+        <button class="button primary full" type="submit">Activate account</button>
+      </form>
+      <form id="recovery-form" class="stack-form hidden">
+        <p class="fine-print">Choose a new password to recover your account.</p>
+        <label>New password<input id="recovery-password" type="password" autocomplete="new-password" minlength="10" required /></label>
+        <label>Confirm password<input id="recovery-password-confirm" type="password" autocomplete="new-password" minlength="10" required /></label>
+        <button class="button primary full" type="submit">Set new password</button>
+      </form>
+      <button id="forgot-password" class="text-button">Send password reset email</button>
+      <p id="login-note" class="fine-print">Accounts are invitation-only. Access is removed when a membership is disabled.</p>
+    </div>
+  </section>
+
+
+  <section id="join-panel" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="join-title">
+    <div class="login-card join-card">
+      <button id="close-join" class="icon-button close-button" aria-label="Close">×</button>
+      <img class="login-mark" src="/assets/free-navy-mark.svg" alt="Free Navy" />
+      <p class="eyebrow">PRIVATE RECRUITMENT LINK</p>
+      <h2 id="join-title">Apply to join Free Navy</h2>
+      <p class="fine-print">This link rotates every day. Submitting this form does not create access immediately. An Officer or command member must approve the application first.</p>
+      <form id="join-form" class="stack-form">
+        <input id="join-token" type="hidden" /><label class="honeypot-field" aria-hidden="true">Website<input id="join-website" tabindex="-1" autocomplete="off" /></label>
+        <label>Display name<input id="join-display-name" maxlength="120" required /></label>
+        <label>RSI handle<input id="join-rsi-handle" maxlength="120" required /></label>
+        <label>Discord handle <span class="muted">(optional, text only)</span><input id="join-discord-handle" maxlength="120" /></label>
+        <label>Referring member<input id="join-referrer" maxlength="120" placeholder="Who shared the private link?" /></label>
+        <label>Preferred department<select id="join-department"><option value="">No preference</option><option>Mining</option><option>Salvage</option><option>Logistics</option><option>Security</option><option>Medical</option><option>Exploration</option><option>Engineering and Crafting</option><option>Trade</option></select></label>
+        <label>Email<input id="join-email" type="email" autocomplete="email" maxlength="320" required /></label>
+        <label>What would you like to do in the org?<textarea id="join-message" rows="4" maxlength="2000"></textarea></label>
+        <button class="button primary full" type="submit">Send application</button>
+      </form>
+      <p id="join-result" class="setup-message hidden"></p>
+    </div>
+  </section>
+
+  <section id="portal-shell" class="portal-shell hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <img src="/assets/free-navy-mark.svg" alt="" />
+        <div><strong>FREE NAVY</strong><small>COMMAND NETWORK</small></div>
+      </div>
+      <nav id="main-nav" class="main-nav"></nav>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div id="user-avatar" class="avatar">FN</div>
+          <div><strong id="user-name">Member</strong><small id="user-role">Member</small></div>
+        </div>
+        <button id="logout-button" class="button ghost full">Log out</button>
+      </div>
+    </aside>
+
+    <div class="portal-main">
+      <header class="topbar">
+        <button id="menu-toggle" class="icon-button mobile-only" aria-label="Open menu">☰</button>
+        <div>
+          <p id="page-kicker" class="eyebrow">FREE NAVY</p>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <form id="global-search-form" class="global-search" role="search">
+            <input id="global-search-input" type="search" placeholder="Search the org network…" aria-label="Search the organisation portal" />
+          </form>
+          <button id="mobile-command-toggle" class="icon-button" title="Toggle compact in-game mode" aria-label="Toggle compact in-game mode">▣</button>
+          <button id="notifications-button" class="icon-button notification-button" title="Notifications" aria-label="Open notifications">◉<span id="notification-count" class="notification-count hidden">0</span></button>
+          <span id="live-patch-badge" class="status-pill live">LIVE</span>
+          <span id="connection-status" class="status-pill">Connecting</span>
+          <button id="refresh-page" class="icon-button" title="Refresh current page" aria-label="Refresh">↻</button>
+        </div>
+      </header>
+      <main id="page-content" class="page-content" tabindex="-1"></main>
+      <footer class="fan-notice portal-fan-notice">
+        <strong>Unofficial Star Citizen fan site.</strong> Not affiliated with the Cloud Imperium group of companies.
+        <a href="https://robertsspaceindustries.com/" target="_blank" rel="noreferrer">Official site</a>
+      </footer>
+    </div>
+  </section>
+
+  <section id="app-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div id="app-modal-card" class="modal-card"></div>
+  </section>
+
+  <script src="/config.js"></script>
+  <script type="module" src="/js/app.bundle.js"></script>
+</body>
+</html>
