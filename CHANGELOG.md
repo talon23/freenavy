@@ -1,3 +1,16 @@
+## 4.1.2 - Netlify transaction hotfix
+
+- Removed explicit `BEGIN;` and `COMMIT;` statements from migrations `0006_live_patch_baseline_and_catalog.sql` and `0007_discord_integrations.sql`.
+- Netlify Database now owns the migration transaction from start to finish, preventing `pq: unexpected transaction status idle`.
+- Added a regression test that rejects standalone `BEGIN;`, `COMMIT;`, or `ROLLBACK;` statements in migration files.
+
+## 4.1.1 - Netlify migration repair
+
+- Repaired migration `0004_governance_operations.sql` so databases created by migration 0002 rename the legacy `site_settings.value` column to `setting_value` before governance settings are inserted.
+- Added compatibility handling for partially migrated databases where either or both column names may exist.
+- Updated the public configuration Function to use the canonical `setting_value` column.
+- Added regression checks for the migration sequence.
+
 # Changelog
 
 ## 2.2.0

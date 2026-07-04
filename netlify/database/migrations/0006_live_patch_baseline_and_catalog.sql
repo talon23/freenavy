@@ -1,4 +1,3 @@
-BEGIN;
 
 -- Free Navy LIVE data patch.
 -- This project is still in setup/testing, so this migration establishes a clean
@@ -243,5 +242,3 @@ WHERE c.category = 'blueprint'
   AND c.is_current = true
   AND c.environment = 'LIVE'
 GROUP BY c.id;
-
-COMMIT;

@@ -32,6 +32,17 @@ const publicConfig = read("netlify/functions/public-config.mjs");
 assert.match(publicConfig, /select setting_key,setting_value from public\.site_settings/i);
 assert.doesNotMatch(publicConfig, /select setting_key,value from public\.site_settings/i);
 
+const migrationFiles = fs.readdirSync("netlify/database/migrations")
+  .filter((name) => name.endsWith(".sql"));
+for (const name of migrationFiles) {
+  const sql = read(`netlify/database/migrations/${name}`);
+  assert.doesNotMatch(
+    sql,
+    /^\s*(BEGIN|COMMIT|ROLLBACK)\s*;\s*$/gim,
+    `${name} must not contain explicit transaction control; Netlify owns the migration transaction.`
+  );
+}
+
 const migration = read("netlify/database/migrations/0006_live_patch_baseline_and_catalog.sql");
 assert.match(migration, /material_name text/i);
 assert.match(migration, /source_record_id text/i);

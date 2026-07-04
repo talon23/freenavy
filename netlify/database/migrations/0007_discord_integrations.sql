@@ -1,4 +1,3 @@
-BEGIN;
 
 -- Discord is installed but OFF by default. Secrets stay in Netlify environment
 -- variables; only switches, non-secret settings and account links are stored here.
@@ -60,5 +59,3 @@ SET setting_value = '{"enabled":false,"setup":"netlify_environment"}'::jsonb,
     description = 'Discord is installed but disabled until Netlify environment variables are configured.',
     updated_at = now()
 WHERE setting_key = 'discord_integration';
-
-COMMIT;
