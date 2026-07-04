@@ -1,5 +1,23 @@
 -- Free Navy governance, departments, safety controls, watchlists, operations and backups.
 -- This migration is additive and preserves all existing portal data.
+-- Allow legacy profile roles used by the current server functions.
+alter table public.profiles
+  drop constraint if exists profiles_role_check;
+
+alter table public.profiles
+  add constraint profiles_role_check check (
+    role in (
+      'owner',
+      'admin',
+      'officer',
+      'quartermaster',
+      'treasurer',
+      'member',
+      'petty_officer',
+      'vp',
+      'president'
+    )
+  );
 
 create extension if not exists pgcrypto;
 
