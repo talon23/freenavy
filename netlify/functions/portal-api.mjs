@@ -92,8 +92,12 @@ async function listRows(client, profile, table, options = {}) {
 
 async function createRow(client, profile, table, input) {
   let payload = prepareCreate(profile, table, cleanPayload(input));
-  if (table === "feature_flags" && String(payload.feature_key || "").startsWith("discord_") && payload.enabled !== false) throw httpError(403, "Discord integrations are intentionally disabled in this build.");
-  if (table === "site_settings" && String(payload.setting_key || "") === "discord_integration") payload.setting_value = { enabled: false };
+  if (table === "feature_flags" && String(payload.feature_key || "").startsWith("discord_")) {
+    throw httpError(409, "Use Admin → Discord Integrations so Netlify environment validation can run.");
+  }
+  if (table === "site_settings" && String(payload.setting_key || "") === "discord_integration") {
+    throw httpError(409, "Use Admin → Discord Integrations to change Discord settings.");
+  }
   if (GAME_VERSION_TABLES.has(table)) payload.game_version = await currentLiveVersion(client);
   if (["game_catalog","catalog_locations","data_source_records"].includes(table)) payload.environment = "LIVE";
   const columns = Object.keys(payload);
@@ -145,8 +149,12 @@ async function updateRow(client, profile, table, id, input) {
       : ["display_name","rsi_handle","discord_handle","status","primary_division","time_zone","preferred_activities","availability_notes"];
     for (const key of Object.keys(payload)) if (!allowed.includes(key)) delete payload[key];
   }
-  if (table === "feature_flags" && String(existing?.feature_key || "").startsWith("discord_") && payload.enabled === true) throw httpError(403, "Discord integrations are intentionally disabled in this build.");
-  if (table === "site_settings" && String(existing?.setting_key || "") === "discord_integration") payload.setting_value = { enabled: false };
+  if (table === "feature_flags" && String(existing?.feature_key || "").startsWith("discord_")) {
+    throw httpError(409, "Use Admin → Discord Integrations so Netlify environment validation can run.");
+  }
+  if (table === "site_settings" && String(existing?.setting_key || "") === "discord_integration") {
+    throw httpError(409, "Use Admin → Discord Integrations to change Discord settings.");
+  }
   if (["game_catalog","catalog_locations"].includes(table) && canEditGameData(profile)) {
     const lockable = table === "game_catalog"
       ? ["name","category","subcategory","manufacturer","description","status","confidence"]

@@ -1,0 +1,120 @@
+/* FREE NAVY FEATURE SWITCH PATCH START */
+.feature-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)) !important;
+  align-items: stretch;
+}
+
+.feature-switch {
+  display: grid !important;
+  grid-template-columns: 24px minmax(0, 1fr) !important;
+  grid-auto-rows: min-content;
+  column-gap: 12px !important;
+  row-gap: 5px !important;
+  align-content: start;
+  min-width: 0;
+  min-height: 116px;
+  padding: 16px !important;
+  overflow: hidden;
+}
+
+.feature-switch > input[type="checkbox"],
+.feature-switch > label:has(input[type="checkbox"]) {
+  grid-column: 1 !important;
+  grid-row: 1 / span 5 !important;
+  align-self: start;
+  justify-self: center;
+  margin: 2px 0 0 !important;
+}
+
+.feature-switch > h4,
+.feature-switch > p,
+.feature-switch > small,
+.feature-switch > .status-pill,
+.feature-switch > .fn-feature-status,
+.feature-switch > :not(input):not(label) {
+  grid-column: 2 !important;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.feature-switch h4 {
+  grid-row: 1 !important;
+  margin: 0 !important;
+  line-height: 1.25;
+}
+
+.feature-switch p {
+  margin: 0 !important;
+  line-height: 1.45;
+}
+
+.feature-switch .status-pill,
+.feature-switch .fn-feature-status {
+  display: inline-flex !important;
+  align-items: center;
+  width: max-content !important;
+  max-width: 100%;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 4px 8px !important;
+  border-radius: 999px !important;
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.feature-switch.fn-discord-feature.locked {
+  opacity: 1;
+}
+
+.fn-integration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: 12px;
+}
+
+.fn-env-list {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0 0;
+}
+
+.fn-env-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(2, 10, 17, .36);
+  overflow-wrap: anywhere;
+}
+
+.fn-integration-toggle {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 12px 0;
+}
+
+.fn-integration-toggle input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.fn-integration-toggle strong,
+.fn-integration-toggle small {
+  display: block;
+}
+
+.fn-integration-toggle small {
+  margin-top: 4px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.fn-discord-linked {
+  color: var(--green);
+}
+/* FREE NAVY FEATURE SWITCH PATCH END */

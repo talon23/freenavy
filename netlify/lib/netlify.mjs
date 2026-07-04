@@ -203,6 +203,13 @@ export function canManagePermissions(profile) { return hasCapability(profile, "m
 export function canManageBackups(profile) { return hasCapability(profile, "manage_backups"); }
 export function canRestoreBackups(profile) { return hasCapability(profile, "restore_backups"); }
 export function isAdmin(profile) { return canManageSite(profile); }
+export async function featureEnabled(client, featureKey) {
+  const result = await client.query(
+    "select enabled from public.feature_flags where feature_key=$1 limit 1",
+    [String(featureKey || "")],
+  );
+  return result.rows[0]?.enabled !== false;
+}
 
 export function canManage(profile, table) {
   if (isExecutive(profile)) return true;

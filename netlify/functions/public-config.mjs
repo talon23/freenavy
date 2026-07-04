@@ -5,7 +5,7 @@ export default async function publicConfig(request) {
   try {
     const client = dbPool();
     const [settings, page] = await Promise.all([
-      client.query("select setting_key,coalesce(setting_value,value) as value from public.site_settings where setting_key in ('branding','public_home','membership','operations')"),
+      client.query("select setting_key,value from public.site_settings where setting_key in ('branding','public_home','membership','operations')"),
       client.query("select page_id,nav_label,title,kicker,hero_title,hero_text,background_url,background_position,overlay_strength,enabled from public.page_settings where page_id='public' limit 1")
     ]);
     return json({

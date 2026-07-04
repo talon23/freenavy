@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { json, errorResponse, httpError, assertSameOrigin, dbPool } from "../lib/netlify.mjs";
+import { json, errorResponse, httpError, assertSameOrigin, dbPool, featureEnabled } from "../lib/netlify.mjs";
 import { verifySignupToken } from "../lib/private-signup.mjs";
 
 function clean(value, max = 500) { return String(value || "").trim().slice(0, max); }
@@ -11,6 +11,7 @@ export default async function membershipRequest(request) {
     const body = await request.json();
     if (clean(body.website, 200)) return json({ submitted: true, message: "Application received." }, 201);
     const client = dbPool();
+    if (!(await featureEnabled(client, "recruitment"))) throw httpError(503, "Private recruitment is currently disabled.");
     const forwarded = request.headers.get("x-nf-client-connection-ip") || request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
     const clientHash = crypto.createHash("sha256").update(`${process.env.PRIVATE_SIGNUP_SECRET || "free-navy"}:${forwarded}`).digest("hex");
     const rate = await client.query(

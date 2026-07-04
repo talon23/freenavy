@@ -1,4 +1,4 @@
-import { requireMember, canViewSignupLink, canManageSignupLink, json, errorResponse, httpError, assertSameOrigin, audit } from "../lib/netlify.mjs";
+import { requireMember, canViewSignupLink, canManageSignupLink, json, errorResponse, httpError, assertSameOrigin, audit, featureEnabled } from "../lib/netlify.mjs";
 import { ensureCurrentLink, tokenFor } from "../lib/private-signup.mjs";
 
 function serialize(row, request) {
@@ -21,6 +21,7 @@ export default async function signupLink(request) {
   if (!["GET","POST"].includes(request.method)) return json({ error: "Method not allowed." }, 405);
   try {
     const { profile, client } = await requireMember();
+    if (!(await featureEnabled(client, "recruitment"))) throw httpError(503, "Private recruitment is currently disabled.");
     if (!canViewSignupLink(profile)) throw httpError(403, "Officer access or above is required.");
     if (request.method === "GET") {
       const row = await ensureCurrentLink(client, profile.id);

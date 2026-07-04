@@ -252,6 +252,13 @@ $("#global-search-form").addEventListener("submit", (event) => { event.preventDe
 window.addEventListener("free-navy:navigate", (event) => navigate(event.detail));
 window.addEventListener("free-navy:search", (event) => navigate("search", { query: event.detail }));
 window.addEventListener("free-navy:notifications-changed", updateNotificationCount);
+window.addEventListener("free-navy:feature-flags-changed", (event) => {
+  const { featureKey, enabled } = event.detail || {};
+  if (featureKey) config.featureFlags = { ...(config.featureFlags || {}), [featureKey]: enabled !== false };
+  const currentItem = navItems.find((item) => item.id === currentPage);
+  if (currentItem && !navAllowed(currentItem)) navigate("dashboard");
+  else buildNavigation();
+});
 window.addEventListener("hashchange", () => { if (!profile) return; const route = routeFromHash(); if (route.page !== currentPage || route.context.query !== currentContext.query) navigate(route.page, route.context); });
 document.addEventListener("keydown", (event) => { if (event.key === "Escape") { $("#login-panel").classList.add("hidden"); $("#join-panel").classList.add("hidden"); $("#app-modal").classList.add("hidden"); } });
 

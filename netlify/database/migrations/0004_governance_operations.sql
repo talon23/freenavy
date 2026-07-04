@@ -1,23 +1,5 @@
 -- Free Navy governance, departments, safety controls, watchlists, operations and backups.
 -- This migration is additive and preserves all existing portal data.
--- Allow legacy profile roles used by the current server functions.
-alter table public.profiles
-  drop constraint if exists profiles_role_check;
-
-alter table public.profiles
-  add constraint profiles_role_check check (
-    role in (
-      'owner',
-      'admin',
-      'officer',
-      'quartermaster',
-      'treasurer',
-      'member',
-      'petty_officer',
-      'vp',
-      'president'
-    )
-  );
 
 create extension if not exists pgcrypto;
 
@@ -202,36 +184,6 @@ create table if not exists public.site_settings (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
-
--- Compatibility with 0002_admin_console, which originally created this table
--- with a column named `value`. CREATE TABLE IF NOT EXISTS does not add missing
--- columns to an existing table, so add and backfill the newer column explicitly.
-alter table public.site_settings
-  add column if not exists setting_value jsonb;
-
-do $$
-begin
-  if exists (
-    select 1
-    from information_schema.columns
-    where table_schema = 'public'
-      and table_name = 'site_settings'
-      and column_name = 'value'
-  ) then
-    update public.site_settings
-    set setting_value = coalesce(setting_value, value, '{}'::jsonb)
-    where setting_value is null;
-  else
-    update public.site_settings
-    set setting_value = coalesce(setting_value, '{}'::jsonb)
-    where setting_value is null;
-  end if;
-end $$;
-
-alter table public.site_settings
-  alter column setting_value set default '{}'::jsonb;
-alter table public.site_settings
-  alter column setting_value set not null;
 
 insert into public.feature_flags(feature_key,label,enabled,description) values
 ('crafting','Crafting and blueprints',true,'Blueprint, materials and production modules.'),
