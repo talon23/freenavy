@@ -23,6 +23,15 @@ assert.doesNotMatch(pages, /Disabled by build/);
 const background = read("netlify/functions/game-data-sync-background.mjs");
 assert.match(background, /background:\s*true/);
 
+
+const governanceMigration = read("netlify/database/migrations/0004_governance_operations.sql");
+assert.match(governanceMigration, /rename column value to setting_value/i);
+assert.match(governanceMigration, /add column if not exists setting_value jsonb/i);
+
+const publicConfig = read("netlify/functions/public-config.mjs");
+assert.match(publicConfig, /select setting_key,setting_value from public\.site_settings/i);
+assert.doesNotMatch(publicConfig, /select setting_key,value from public\.site_settings/i);
+
 const migration = read("netlify/database/migrations/0006_live_patch_baseline_and_catalog.sql");
 assert.match(migration, /material_name text/i);
 assert.match(migration, /source_record_id text/i);

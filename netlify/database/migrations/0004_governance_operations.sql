@@ -185,6 +185,35 @@ create table if not exists public.site_settings (
   updated_at timestamptz not null default now()
 );
 
+-- Migration 0002 originally created this column as "value". A database that has
+-- already applied 0002 therefore needs the column normalised before 0004 inserts
+-- governance settings. This block is safe for fresh, partial and repaired installs.
+do $$
+begin
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'site_settings' and column_name = 'value'
+  ) and not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'site_settings' and column_name = 'setting_value'
+  ) then
+    execute 'alter table public.site_settings rename column value to setting_value';
+  elsif exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'site_settings' and column_name = 'value'
+  ) and exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'site_settings' and column_name = 'setting_value'
+  ) then
+    execute 'update public.site_settings set setting_value = coalesce(setting_value, value, ''{}''::jsonb)';
+  end if;
+end $$;
+
+alter table public.site_settings add column if not exists setting_value jsonb;
+update public.site_settings set setting_value = '{}'::jsonb where setting_value is null;
+alter table public.site_settings alter column setting_value set default '{}'::jsonb;
+alter table public.site_settings alter column setting_value set not null;
+
 insert into public.feature_flags(feature_key,label,enabled,description) values
 ('crafting','Crafting and blueprints',true,'Blueprint, materials and production modules.'),
 ('wikelo','Wikelo tracker',true,'Wikelo projects and reward tracking.'),
