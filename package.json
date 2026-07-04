@@ -1,12 +1,16 @@
 {
   "name": "free-navy-org-command",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "esbuild js/app.js --bundle --format=esm --minify --sourcemap --outfile=js/app.bundle.js",
-    "check": "node --check js/app.js && node --check js/data.js && node --check js/pages.js && node --check js/sample-data.js && node --check js/utils.js && node --check netlify/lib/netlify.mjs && node --check netlify/lib/private-signup.mjs && node --check netlify/lib/game-import.mjs && node --check netlify/lib/backup.mjs && node --check netlify/lib/official-live.mjs && node --check netlify/functions/portal-api.mjs && node --check netlify/functions/membership-request.mjs && node --check netlify/functions/signup-link.mjs && node --check netlify/functions/invite-member.mjs && node --check netlify/functions/backup-manager.mjs && node --check netlify/functions/scheduled-backup.mjs && node --check netlify/functions/sync-live-metadata.mjs && node --check netlify/functions/sync-game-data-background.mjs && node --check netlify/functions/sync-game-data-scheduled.mjs && node --check netlify/functions/live-version.mjs && node --check netlify/functions/uex.mjs && node --check netlify/functions/warehouse-image.mjs",
-    "test": "node tests/permissions.mjs"
+    "check": "node --check js/app.js && node --check js/data.js && node --check js/pages.js && node --check js/sample-data.js && node --check js/utils.js && node --check netlify/lib/netlify.mjs && node --check netlify/lib/private-signup.mjs && node --check netlify/lib/game-import.mjs && node --check netlify/lib/backup.mjs && node --check netlify/lib/official-live.mjs && node --check netlify/functions/portal-api.mjs && node --check netlify/functions/membership-request.mjs && node --check netlify/functions/signup-link.mjs && node --check netlify/functions/invite-member.mjs && node --check netlify/functions/backup-manager.mjs && node --check netlify/functions/scheduled-backup.mjs && node --check netlify/functions/sync-live-metadata.mjs && node --check netlify/functions/sync-game-data-background.mjs && node --check netlify/functions/sync-game-data-scheduled.mjs && node --check netlify/functions/live-version.mjs && node --check netlify/functions/uex.mjs && node --check netlify/functions/warehouse-image.mjs && node --check netlify/lib/patch-version.mjs && node --check netlify/lib/live-patch-data.mjs && node --check netlify/lib/admin-identity.mjs && node --check netlify/lib/discord-integration.mjs && node --check netlify/functions/game-data-admin.mjs && node --check netlify/functions/game-data-sync-background.mjs && node --check netlify/functions/live-patch-check-scheduled.mjs && node --check netlify/functions/discord-admin.mjs && node --check netlify/functions/discord-auth-start.mjs && node --check netlify/functions/discord-auth-callback.mjs && node --check netlify/functions/discord-link-status.mjs && node --check js/admin-game-data-overlay.js && node --check js/admin-integrations-overlay.js",
+    "test": "node tests/permissions.mjs",
+    "test:live-patch": "node tests/live-patch-version.mjs",
+    "test:patch": "node tests/patch-structure.mjs",
+    "validate": "npm run check && npm test && npm run test:live-patch && npm run test:import-shapes && npm run test:patch && npm run build",
+    "test:import-shapes": "node tests/live-patch-import-shapes.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "10.1.0",

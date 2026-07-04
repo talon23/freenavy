@@ -14,6 +14,6 @@ Completed before packaging:
 - Package lock resolves through the public npm registry
 - No Supabase runtime dependency remains
 - No real credentials are included
-- Discord webhooks, OAuth, bots and automatic posting are absent and server-disabled
+- Discord OAuth and webhook code is present, server-protected and disabled by default until Netlify variables are configured
 
 A production database execution and authenticated browser smoke test must occur after deployment because those require the connected Netlify project, Identity tenant and production database.

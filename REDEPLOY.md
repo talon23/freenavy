@@ -84,3 +84,18 @@ Wait for:
 ## After confirming the President account
 
 Remove `BOOTSTRAP_OWNER_EMAIL` from Netlify and redeploy. The existing President database record remains in place.
+
+## 4.8.2 test-phase deployment
+
+This portal is still in setup/testing and contains no production data that needs preserving. Apply the overlay directly to GitHub, run the patch script, commit and push. Netlify should remain the only host, Functions platform, Identity provider and database platform.
+
+New migrations:
+
+```text
+netlify/database/migrations/0006_live_patch_baseline_and_catalog.sql
+netlify/database/migrations/0007_discord_integrations.sql
+```
+
+After deployment, open **Admin → Game Data & LIVE Verification** and import the 4.8.2 baseline. Use **Reset imported test data** whenever a clean import is needed during testing.
+
+Discord remains off until the variables in `NETLIFY-ENVIRONMENT.md` are added and the Admin tickboxes are enabled.

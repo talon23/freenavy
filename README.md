@@ -34,7 +34,7 @@ This release preserves the working portal, login, database, warehouse, crafting,
 - Daily, weekly and pre-import backups using Netlify Blobs
 - Mobile command mode
 
-Discord webhooks, Discord OAuth, bots and automatic Discord posting remain deliberately disabled. The Discord handle is only an optional member profile text field.
+Discord OAuth account linking and webhook support are installed but disabled by default until their Netlify environment variables are configured.
 
 ## Netlify services used
 
@@ -217,7 +217,7 @@ Do not delete older migration files. Netlify applies new migrations in sequence.
 
 ```env
 BOOTSTRAP_OWNER_EMAIL=your-email@example.com
-STAR_CITIZEN_LIVE_VERSION=4.8.3
+STAR_CITIZEN_BASELINE_VERSION=4.8.2-LIVE.12030094
 RSI_LIVE_PATCH_URL=
 UEX_API_TOKEN=
 UEX_CLIENT_VERSION=free-navy-4.0
@@ -278,4 +278,18 @@ npm audit --omit=dev
 - Suspended and removed members have their session version incremented.
 - Daily application links never grant portal access directly.
 - Full backup restoration is hard-locked to the President.
-- Discord automation remains disabled in both the database defaults and server-side feature controls.
+- Discord integrations default to off and can only be enabled from Admin after the required Netlify environment variables are present.
+
+## Free Navy 4.8.2 baseline and Discord patch
+
+- GitHub is the source of truth and Netlify performs the build, Functions, Identity and Database deployment.
+- The seed dataset is **4.8.2-LIVE.12030094**, displayed as baseline patch **4.8.2**.
+- Ships, ground vehicles, blueprints and blueprint materials import from the Star Citizen Wiki API.
+- The official RSI LIVE patch and each third-party source advance independently.
+- The Game Data Library and LIVE verification controls are Admin-only.
+- The missing `material_name` campaign column is repaired.
+- Discord OAuth linking and webhooks are installed but switched off by default.
+- Discord secrets are stored only in Netlify environment variables.
+- This project is still in setup/testing, so imported test data may be reset from the Admin game-data page.
+
+See `PATCH-README.md` and `NETLIFY-ENVIRONMENT.md` for deployment steps.
